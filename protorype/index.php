@@ -13,7 +13,7 @@ class main
         $firstPost->addComment("Второй комментарий под первым постом");
     
 
-        $clonePost = clone $firstPost; 
+        $clonePost = $firstPost->Clone(); 
         
         if(count($clonePost->getComments)===0)
         {

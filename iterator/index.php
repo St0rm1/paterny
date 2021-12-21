@@ -7,15 +7,19 @@ class main
 {
     public function run():void
     {
-        $imageArray = new ImageArray();
-        $author = new Author('Joth');
-        $imageArray->addImage(new Image("./image1.jpg",$author));
+        $aggregator = new ImageArray();
+        $aggregator->addImage(new Image("./iomage1.png"));
+        $aggregator->addImage(new Image("./iomage2.png"));
+        $aggregator->addImage(new Image("./iomage3.png"));
+        $aggregator->addImage(new Image("./iomage4.png"));
+        $aggregator->addImage(new Image("./iomage5.png"));
+        $iterator = $aggregator->getIterator();
+        $image = $iterator->First();
 
-        foreach ($csv as $key => $row) {
-            $image = $row->getGdImage();
-            $createDate = $row->getCreateDate(); 
-            $image->imagewebp();
-            var_dump($createDate);
+        while(!$iterator->IsDone())
+        {
+            var_dump($image);
+            $image = $iterator->Next();
         }
     }
 }

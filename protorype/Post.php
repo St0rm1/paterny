@@ -5,7 +5,7 @@ namespace Prototype;
 /**
  * Прототип.
  */
-class Post
+class Post implements IPostCloner
 {
     private $title;
     private $id;
@@ -23,7 +23,7 @@ class Post
      */
     private $date;
 
-    public function __construct(string $title,  Author $author)
+    public function __construct(string $title, string $body,  Author $author)
     {
         $this->title = $title;
         $this->body = $body;
@@ -76,12 +76,10 @@ class Post
     /**
      * Метод вызываемый при клонировнии объекта, возвращающий клон данного объекта с изменёнными полями
      */
-    public function __clone()
+    public function Clone()
     {        
-        $this->title = "Копия поста '" . $this->title."'";
-        $this->author->addToPage($this);
-        $this->comments = [];
-        $this->date = new \DateTime();
-        $this->id = uniqid("page_",true);
-    }
+        $post  = new Post($this->title,'',$this->author);
+        $this->author->addToPage($post);   
+        return $post;
+    }    
 }
