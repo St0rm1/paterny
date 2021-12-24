@@ -38,7 +38,7 @@ class PostTest extends TestCase
         $post1 = new Post('testPost',$author);
         $post1->setBody("testBody");
         $post1->addComment('commant1');
-        $post2 = clone  $post1;
+        $post2 = $post1->Clone();
 
         $this->assertEquels('testBody',$post2->getBody());
         $this->assertEquels(1,count( $post1->getComments()));

@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 use Iterator;
 use GdImage;
 
-class ImageIteratorTest extends Testcase 
+class ImageArrayTest extends Testcase 
 {
     public function testCreate()
     {
@@ -14,49 +14,46 @@ class ImageIteratorTest extends Testcase
         $this->assertInstanceOf(ImageArray::class, $imageArray);
     }
 
-    public function testKey()
+    public function testGetIterator()
     {
         $imageArray = new ImageArray();
-        $image = new Image("./image1.jpg",new Author('test'));
-        $imageArray->addImage($image);
-        $this->assertEquels(0,$imageArray->key());
+        $iterator = $imageArray->getIterator();
+        $this->assertInstanceOf(IIterator::class,$iterator);
     }
-    public function testNext()
+    public function testCount()
     {
-        $imageArray = new ImageArray();
-        $image = new Image("./image1.jpg",new Author('test'));
-        $imageArray->addImage($image);
-        $imageArray->next();
-        $this->assertEquels(1,$imageArray->key());
+        $imageArray = new ImageArray();        
+        $imageArray->addImage(new Image("./iomage1.png"));
+        $imageArray->addImage(new Image("./iomage2.png"));
+        $imageArray->addImage(new Image("./iomage3.png"));
+        $imageArray->addImage(new Image("./iomage4.png"));
+        $imageArray->addImage(new Image("./iomage5.png"));
+
+        $this->assertEquels(5,$imageArray->Count());
+
     }
-    public function testCurrent()
+    public function testGet()
     {
-        $imageArray = new ImageArray();
-        $image = new Image("./image1.jpg",new Author('test'));
-        $imageArray->addImage($image);
-        $image = new Image("./image2.jpg",new Author('test'));
-        $imageArray->addImage($image);
-
-        $this->assertEquels('./image1.jpg',$imageArray->current()->getPath());
-        $imageArray->next();
-        $this->assertEquels('./image2.jpg',$imageArray->current()->getPath());
+        $imageArray = new ImageArray();        
+        $imageArray->addImage(new Image("./iomage1.png"));
+        $imageArray->addImage(new Image("./iomage2.png"));
+        $imageArray->addImage(new Image("./iomage3.png"));
+        $imageArray->addImage(new Image("./iomage4.png"));
+        $imageArray->addImage(new Image("./iomage5.png"));
+        $this->assertEquels("./iomage2.png",$imageArray->get(1)->getPath());
     }
 
-    public function testRewind()
+    public function testGetItems()
     {
-        $imageArray = new ImageArray();
-        $image = new Image("./image1.jpg",new Author('test'));
-        $imageArray->addImage($image);
-        $image = new Image("./image2.jpg",new Author('test'));
-        $imageArray->addImage($image);
-
-        $this->assertEquels(0,$imageArray->key());
-
-        $imageArray->next();
-        $this->assertEquels(1,$imageArray->key());
-
-        $imageArray->rewind();
-        $this->assertEquels(0,$imageArray->key());
+        $imageArray = new ImageArray();        
+        $imageArray->addImage(new Image("./iomage1.png"));
+        $imageArray->addImage(new Image("./iomage2.png"));
+        $imageArray->addImage(new Image("./iomage3.png"));
+        $imageArray->addImage(new Image("./iomage4.png"));
+        $imageArray->addImage(new Image("./iomage5.png"));
+        $items = $imageArray->getItems();
+        $this->assertEquels(true, is_array($items));
+        $this->assertEquels("./iomage4.png",$items[3]->getPath());
     }
     
 }
